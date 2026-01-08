@@ -1,0 +1,8 @@
+Origin: PulseFetch
+Label: PulseFetch
+Suite: stable
+Codename: stable
+Architectures: amd64 arm64
+Components: main
+Description: PulseFetch APT Repository
+Thu, 08 Jan 2026 14:01:59 UTC

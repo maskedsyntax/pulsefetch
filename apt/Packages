@@ -1,0 +1,15 @@
+Package: pulsefetch
+Version: 1.0.1
+Architecture: amd64
+Maintainer: Batman <batman@andromeda>
+Installed-Size: 6097
+Filename: ./pulsefetch_1.0.1_linux_amd64.deb
+Size: 2596534
+MD5sum: b60f8c9725bb6f9e9cea668988b86001
+SHA1: f66dbf3949ac72a278cb3f77dfd7ab59338e5d54
+SHA256: 47912d2c66ede013f6a1704b2dcecd4765d046c2ae205d2dce55c9feb80b5c5a
+Priority: optional
+Homepage: https://github.com/maskedsyntax/pulsefetch
+Description: Minimalist system information fetch tool.
+License: MIT
+
