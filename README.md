@@ -6,8 +6,8 @@ PulseFetch is a minimalist, Neofetch-inspired program written in Go. It displays
 
 - Display essential system information:
   - OS, Host, Kernel, Uptime, Packages, Shell, Resolution, WM, Terminal, CPU, GPU, Memory, and Disk.
-- High-quality image rendering:
-  - Uses Chafa for high-resolution terminal graphics.
+- Image rendering:
+  - Uses Chafa for terminal graphics.
   - Supports Kitty Graphics Protocol, Sixel, and Unicode block symbols fallback.
   - Automatically detects terminal capabilities for the best possible image quality.
 - Customizable configuration:
@@ -19,7 +19,7 @@ PulseFetch is a minimalist, Neofetch-inspired program written in Go. It displays
 ## Requirements
 
 - Go 1.25.3 or later.
-- Chafa (optional, for high-resolution image support).
+- Chafa (optional, for image support).
 
 ## Installation
 
@@ -35,4 +35,4 @@ PulseFetch is a minimalist, Neofetch-inspired program written in Go. It displays
 
 ## Configuration
 
-PulseFetch looks for a configuration file at `~/.config/pulsefetch/pulsefetch.conf` or `/etc/pulsefetch/pulsefetch.conf`. A default template is provided in the repository.
+PulseFetch looks for a configuration file at `~/.config/pulsefetch/pulsefetch.toml` or `/etc/pulsefetch/pulsefetch.toml`. A default template is provided in the repository.

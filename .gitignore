@@ -1,5 +1,5 @@
 # Binaries
-pulsefetch
+/pulsefetch
 pulsefetch.exe
 *.exe
 
@@ -7,7 +7,7 @@ pulsefetch.exe
 vendor/
 
 # Configuration (user specific)
-# We keep pulsefetch.conf in the repo as a template, 
+# We keep pulsefetch.toml in the repo as a template, 
 # but users might want to ignore their local changes.
 # For now I will keep it tracked as it was requested as a default config.
 

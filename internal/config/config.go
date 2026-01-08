@@ -66,11 +66,11 @@ func LoadConfig() (*Config, error) {
 	viper.SetDefault("show_resolution", true)
 	viper.SetDefault("image_mode", "ascii")
 
-	// Check for specific config file: ~/.config/pulsefetch/pulsefetch.conf
+	// Check for specific config file: ~/.config/pulsefetch/pulsefetch.toml
 	home, err := os.UserHomeDir()
 	foundSpecific := false
 	if err == nil {
-		specificPath := filepath.Join(home, ".config", "pulsefetch", "pulsefetch.conf")
+		specificPath := filepath.Join(home, ".config", "pulsefetch", "pulsefetch.toml")
 		if _, err := os.Stat(specificPath); err == nil {
 			viper.SetConfigFile(specificPath)
 			foundSpecific = true
