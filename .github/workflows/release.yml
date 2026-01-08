@@ -11,6 +11,8 @@ permissions:
 jobs:
   goreleaser:
     runs-on: ubuntu-latest
+    outputs:
+      tag: ${{ github.ref_name }}
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -30,3 +32,49 @@ jobs:
           args: release --clean
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+  apt-repo:
+    runs-on: ubuntu-latest
+    needs: goreleaser
+    steps:
+      - name: Checkout gh-pages
+        uses: actions/checkout@v4
+        with:
+          ref: gh-pages
+          path: repo
+
+      - name: Download debs from Release
+        uses: robinraju/release-downloader@v1.11
+        with:
+          tag: ${{ needs.goreleaser.outputs.tag }}
+          fileName: "*.deb"
+          out-file-path: "repo/debs"
+
+      - name: Update APT Metadata
+        working-directory: repo
+        run: |
+          sudo apt-get update && sudo apt-get install -y dpkg-dev
+          mkdir -p apt
+          cp debs/*.deb apt/
+          cd apt
+          # Generate Packages file
+          dpkg-scanpackages . /dev/null > Packages
+          gzip -9c Packages > Packages.gz
+          # Generate Release file
+          echo "Origin: PulseFetch" > Release
+          echo "Label: PulseFetch" >> Release
+          echo "Suite: stable" >> Release
+          echo "Codename: stable" >> Release
+          echo "Architectures: amd64 arm64" >> Release
+          echo "Components: main" >> Release
+          echo "Description: PulseFetch APT Repository" >> Release
+          date -u +'%a, %d %b %Y %H:%M:%S UTC' >> Release
+
+      - name: Commit and Push to gh-pages
+        working-directory: repo
+        run: |
+          git config user.name github-actions
+          git config user.email github-actions@github.com
+          git add apt/
+          git commit -m "Update APT repository for ${{ needs.goreleaser.outputs.tag }}"
+          git push origin gh-pages
