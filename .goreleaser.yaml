@@ -1,0 +1,51 @@
+# .goreleaser.yaml
+version: 2
+
+project_name: pulsefetch
+
+before:
+  hooks:
+    - go mod tidy
+
+builds:
+  - env:
+      - CGO_ENABLED=0
+    goos:
+      - linux
+    goarch:
+      - amd64
+      - arm64
+    main: ./cmd/pulsefetch/main.go
+    binary: pulsefetch
+
+archives:
+  - name_template: "{{ .ProjectName }}_{{ .Version }}_{{ .Os }}_{{ .Arch }}"
+    format: tar.gz
+
+nfpms:
+  - id: packages
+    vendor: PulseFetch
+    homepage: https://github.com/maskedsyntax/pulsefetch
+    maintainer: Batman <batman@andromeda>
+    description: Minimalist system information fetch tool.
+    license: MIT
+    formats:
+      - deb
+      - rpm
+    contents:
+      - src: ./pulsefetch.toml
+        dst: /etc/pulsefetch/pulsefetch.toml
+        type: config
+
+checksum:
+  name_template: 'checksums.txt'
+
+snapshot:
+  name_template: "{{ .Tag }}-next"
+
+changelog:
+  sort: asc
+  filters:
+    exclude:
+      - '^docs:'
+      - '^test:'
