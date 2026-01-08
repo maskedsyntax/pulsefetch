@@ -23,6 +23,20 @@ PulseFetch is a minimalist, Neofetch-inspired program written in Go. It displays
 
 ## Installation
 
+### Debian / Ubuntu (APT)
+
+You can install PulseFetch directly from the automated APT repository:
+
+```bash
+# 1. Add the repository
+echo "deb [trusted=yes] https://maskedsyntax.github.io/pulsefetch/apt/ /" | sudo tee /etc/apt/sources.list.d/pulsefetch.list
+
+# 2. Update and install
+sudo apt update && sudo apt install pulsefetch
+```
+
+### From Source
+
 1. Clone the repository.
 2. Build the binary:
    ```bash
