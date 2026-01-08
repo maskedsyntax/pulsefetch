@@ -1,13 +1,38 @@
-# ⚡️ PulseFetch 
+# PulseFetch
 
-**PulseFetch** is a minimalist, Neofetch-inspired program written in Golang. It displays system information along with a custom image/logo, designed for terminal enthusiasts.
+PulseFetch is a minimalist, Neofetch-inspired program written in Go. It displays system information along with a custom image or logo, designed for terminal enthusiasts.
 
----
-
-## 🛠️ Features
+## Features
 
 - Display essential system information:
-  - OS, CPU, Memory, Uptime, and more.
-- Render custom images/logos as ASCII art.
-- Fully customizable themes and layouts.
+  - OS, Host, Kernel, Uptime, Packages, Shell, Resolution, WM, Terminal, CPU, GPU, Memory, and Disk.
+- High-quality image rendering:
+  - Uses Chafa for high-resolution terminal graphics.
+  - Supports Kitty Graphics Protocol, Sixel, and Unicode block symbols fallback.
+  - Automatically detects terminal capabilities for the best possible image quality.
+- Customizable configuration:
+  - TOML-based configuration file.
+  - Support for custom images and logos.
+  - Toggle individual information modules.
 - Lightweight and fast.
+
+## Requirements
+
+- Go 1.25.3 or later.
+- Chafa (optional, for high-resolution image support).
+
+## Installation
+
+1. Clone the repository.
+2. Build the binary:
+   ```bash
+   go build -o pulsefetch ./cmd/pulsefetch/main.go
+   ```
+3. Run the program:
+   ```bash
+   ./pulsefetch
+   ```
+
+## Configuration
+
+PulseFetch looks for a configuration file at `~/.config/pulsefetch/pulsefetch.conf` or `/etc/pulsefetch/pulsefetch.conf`. A default template is provided in the repository.

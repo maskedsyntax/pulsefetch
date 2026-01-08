@@ -1,0 +1,21 @@
+# Binaries
+pulsefetch
+pulsefetch.exe
+*.exe
+
+# Dependencies
+vendor/
+
+# Configuration (user specific)
+# We keep pulsefetch.conf in the repo as a template, 
+# but users might want to ignore their local changes.
+# For now I will keep it tracked as it was requested as a default config.
+
+# IDEs and other tools
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Project specific
+Agents.md
