@@ -201,15 +201,53 @@ func formatDuration(d time.Duration) string {
 }
 
 func getModel() string {
-	data, err := os.ReadFile("/sys/class/dmi/id/product_name")
-	if err == nil {
+	readFile := func(path string) string {
+		data, err := os.ReadFile(path)
+		if err != nil {
+			return ""
+		}
 		return strings.TrimSpace(string(data))
 	}
-	data, err = os.ReadFile("/sys/class/dmi/id/board_name")
-	if err == nil {
-		return strings.TrimSpace(string(data))
+
+	vendor := readFile("/sys/class/dmi/id/sys_vendor")
+	product := readFile("/sys/class/dmi/id/product_name")
+	version := readFile("/sys/class/dmi/id/product_version")
+
+	if product == "" {
+		product = readFile("/sys/class/dmi/id/board_name")
 	}
-	return "Unknown"
+
+	var res string
+	if product != "" && version != "" && product != version {
+		// If product name is a short model ID (common on Lenovo), use version which often has the marketing name
+		if len(product) < 6 || strings.Contains(version, product) {
+			res = version
+		} else {
+			res = fmt.Sprintf("%s %s", product, version)
+		}
+	} else if product != "" {
+		res = product
+	} else if version != "" {
+		res = version
+	} else {
+		return "Unknown"
+	}
+
+	// Clean up "None", "Default string", etc.
+	lowRes := strings.ToLower(res)
+	if lowRes == "none" || lowRes == "default string" || lowRes == "not specified" {
+		if vendor != "" {
+			return vendor
+		}
+		return "Unknown"
+	}
+
+	// Add vendor prefix if missing
+	if vendor != "" && !strings.HasPrefix(strings.ToLower(res), strings.ToLower(vendor)) {
+		res = fmt.Sprintf("%s %s", vendor, res)
+	}
+
+	return res
 }
 
 func getGPU() []string {
